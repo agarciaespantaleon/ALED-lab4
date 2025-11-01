@@ -19,8 +19,8 @@ import es.upm.dit.aled.lab4.er.gui.Position2D;
  */
 public class EmergencyRoom {
 
-	private Map<String, Area> areas;
-	private Map<Integer, Patient> patients;
+	private Map<String, Area> areas; //la clave es el nombre de cada area
+	private Map<Integer, Patient> patients; //la clave es el numero de cada paciente
 
 	/**
 	 * Builds a new EmergencyRoom
@@ -77,7 +77,7 @@ public class EmergencyRoom {
 		Collection<Patient> patients = this.patients.values();
 		return new ArrayList<Patient>(patients);
 	}
-
+//cambio 
 	/**
 	 * Populates the EmergencyRoom with the data contained in a text file.
 	 * 
@@ -122,8 +122,8 @@ public class EmergencyRoom {
 	 * 
 	 * @param patient The Patient.
 	 */
-	public void admit(Patient patient) {
-		// TODO
+	public void admit(Patient patient) { //empieza a atender al paciente
+		patient.start();
 	}
 
 	/**
@@ -131,8 +131,13 @@ public class EmergencyRoom {
 	 * 
 	 * @param patient The Patient.
 	 */
-	public void waitForDischarge(Patient patient) {
-		// TODO
+	public void waitForDischarge(Patient patient) { //espera a q el patient termine su protocolo
+		try {
+			patient.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -44,7 +44,13 @@ public class FASTASearchCallable implements Callable<List<Integer>> {
 	 */
 	@Override
 	public List<Integer> call() throws Exception {
-		// TODO
+		List<Integer> lista= new ArrayList<Integer>();
+		int index=0;
+		for(byte p: pattern) {
+			if(compare(pattern, index++));
+			lista.add(index);
+		}
+		
 		return null;
 	}
 

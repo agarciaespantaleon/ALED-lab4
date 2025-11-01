@@ -11,9 +11,9 @@ import java.util.Objects;
  */
 public class Transfer {
 
-	private Area to;
-	private int time;
-
+	private Area to; //area a la que se mueve
+	private int time; //tiempo q tarda transfer
+ 
 	/**
 	 * Builds a new Transfer.
 	 * 

@@ -22,10 +22,10 @@ import es.upm.dit.aled.lab4.er.gui.Position2D;
  */
 public class Patient extends Thread {
 
-	private int number;
-	private List<Transfer> protocol;
-	private int indexProtocol;
-	private Area location;
+	private int number; //unico para cada paciente 
+	private List<Transfer> protocol; //recorrido q sigue el paciente en urgencias
+	private int indexProtocol; //para saber en q punto se encuentra del protocolo. empieza a 0 cuando se crea paciente
+	private Area location; //area en la q se encuentra el paciente actualmente
 	private Position2D position;
 	private Color color;
 
@@ -129,8 +129,13 @@ public class Patient extends Thread {
 	 * Advances the Patient's protocol. The Patient is moved to the new Area, the
 	 * movement is animated by the GUI and the index is increased by one.
 	 */
-	private void advanceProtocol() {
-		// TODO
+	private void advanceProtocol() { //hace que el paciente avance al sig paso en el protocolo
+		//1
+		EmergencyRoomGUI.getInstance().animateTransfer(this, protocol.get(indexProtocol));
+		//2
+		location=protocol.get(indexProtocol).getTo();
+		//3
+		indexProtocol++;
 	}
 
 	/**
@@ -138,8 +143,13 @@ public class Patient extends Thread {
 	 * the Patient must spend at this method the amount of time specified in such
 	 * Area.
 	 */
-	private void attendedAtLocation() {
-		// TODO
+	private void attendedAtLocation() { //el paciente espera en el area en la que se encuentra lo q el tiempo de esta determine
+		try {
+			sleep(location.getTime());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -149,7 +159,16 @@ public class Patient extends Thread {
 	 */
 	@Override
 	public void run() {
-		// TODO
+		try {
+		while(indexProtocol<protocol.size()) {
+			this.attendedAtLocation();
+			this.advanceProtocol();
+		}
+		}catch(Exception e) {
+			attendedAtLocation();
+			EmergencyRoomGUI.getInstance().removePatient(this);
+		}
+		
 	}
 
 }
